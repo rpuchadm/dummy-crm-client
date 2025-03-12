@@ -1,7 +1,7 @@
 const AppConfig = {
-  APP_NAME: "Dummy Corp ERP",
-  API_BASE_URL: "https://erp.mydomain.com/corp-erp-api/",
-  TOKEN_ITEM_NAME: "corp-erp-token",
+  APP_NAME: "Dummy CRM",
+  API_BASE_URL: "https://crm.mydomain.com/crm-api/",
+  TOKEN_ITEM_NAME: "crm-token",
 }
 
 export default AppConfig
