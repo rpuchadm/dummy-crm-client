@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummy-crm-vite-nginx-app
+  namespace: dummy-crm-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dummy-crm-vite-nginx-app
+  template:
+    metadata:
+      labels:
+        app: dummy-crm-vite-nginx-app
+    spec:
+      containers:
+        - name: dummy-crm-vite-app-nginx
+          image: localhost:32000/dummy-crm-vite-app:latest
+          ports:
+            - name: http-port
+              containerPort: 80
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 500m
+              memory: 50Mi
+            requests:
+              cpu: 10m
+              memory: 5Mi
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
