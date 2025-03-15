@@ -51,13 +51,9 @@ const ListArticulos = () => {
             <ListGroup.Item key={articulo.id}>
               <Card>
                 <Card.Header>
-                  <FaSuitcaseRolling /> Artíuclo #{articulo.id} -{" "}
+                  <FaSuitcaseRolling /> Artículo #{articulo.id} -{" "}
                   {articulo.fecha_creacion && (
-                    <>
-                      {dayjs(articulo.fecha_creacion).format(
-                        "DD/MM/YYYY HH:mm"
-                      )}
-                    </>
+                    <>{dayjs(articulo.fecha_creacion).format("DD/MM/YYYY")}</>
                   )}
                   <a
                     href={`/articulo/${articulo.id}`}
