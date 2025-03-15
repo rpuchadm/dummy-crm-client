@@ -39,10 +39,10 @@ const ListArticulos = () => {
   return (
     <>
       <h1>
-        <FaSuitcaseRolling /> List Articulos
+        <FaSuitcaseRolling /> List Artículos
       </h1>
       <p style={{ marginTop: "20px", textAlign: "right" }}>
-        <a href="/articulo/0">New Articulo</a>
+        <a href="/articulo/0">New Artículo</a>
       </p>
       {loading ? (
         <Spinner animation="border" role="status" />
@@ -52,7 +52,7 @@ const ListArticulos = () => {
             <ListGroup.Item key={articulo.id}>
               <Card>
                 <Card.Header>
-                  <FaEnvelope /> Arituclo #{articulo.id} -{" "}
+                  <FaSuitcaseRolling /> Artíuclo #{articulo.id} -{" "}
                   {dayjs(articulo.created_at).format("DD/MM/YYYY HH:mm")}
                   <a
                     href={`/articulo/${articulo.id}`}

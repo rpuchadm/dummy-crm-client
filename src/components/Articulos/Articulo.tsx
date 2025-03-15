@@ -13,6 +13,7 @@ import {
   FaCheckCircle,
   FaEnvelope,
   FaExclamationTriangle,
+  FaSuitcaseRolling,
   FaUser,
 } from "react-icons/fa"
 
@@ -77,7 +78,9 @@ const Articulo = ({ articulo }: ArticuloProps) => {
   return (
     <Form onSubmit={handleSave}>
       <Card>
-        <Card.Header>Person</Card.Header>
+        <Card.Header>
+          <FaSuitcaseRolling /> Articulo
+        </Card.Header>
         <Card.Body>
           <Container>
             <Row>

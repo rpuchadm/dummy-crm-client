@@ -31,7 +31,7 @@ const Header = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/listarticulos">Articulos</Nav.Link>
+              <Nav.Link href="/listarticulos">Artículos</Nav.Link>
               <Nav.Link href="/person">New Person</Nav.Link>
             </Nav>
             {lstoken ? (
