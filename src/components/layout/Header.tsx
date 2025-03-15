@@ -1,3 +1,5 @@
+import "bootswatch/dist/united/bootstrap.css"
+
 import React from "react"
 
 import Button from "react-bootstrap/Button"
@@ -7,7 +9,13 @@ import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
 
 import AppConfig from "../../AppConfig"
-import { FaRunning } from "react-icons/fa"
+import {
+  FaEnvelope,
+  FaIndustry,
+  FaRunning,
+  FaSuitcaseRolling,
+} from "react-icons/fa"
+import NavDropdown from "react-bootstrap/esm/NavDropdown"
 
 const Header = () => {
   const [modalVisible, setModalVisible] = React.useState(false)
@@ -33,6 +41,17 @@ const Header = () => {
             <Nav className="me-auto">
               <Nav.Link href="/listarticulos">Artículos</Nav.Link>
               <Nav.Link href="/person">New Person</Nav.Link>
+              <NavDropdown title="Other Apps" id="collasible-nav-dropdown">
+                <NavDropdown.Item href="https://erp.mydomain.com/">
+                  <FaIndustry /> Corp ERP
+                </NavDropdown.Item>
+                <NavDropdown.Item href="https://crm.mydomain.com/">
+                  <FaSuitcaseRolling /> CRM
+                </NavDropdown.Item>
+                <NavDropdown.Item href="https://post.mydomain.com/">
+                  <FaEnvelope /> Post Office
+                </NavDropdown.Item>
+              </NavDropdown>
             </Nav>
             {lstoken ? (
               <Nav>
