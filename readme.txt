@@ -5,8 +5,8 @@ npm create vite@latest dummy-crm-client -- --template react-ts
   npm run dev
 
 npm run build
-docker build -t vite-nginx-app .
-docker tag vite-nginx-app localhost:32000/dummy-crm-vite-app:latest
+docker build -t dummy-crm-vite-app .
+docker tag dummy-crm-vite-app localhost:32000/dummy-crm-vite-app:latest
 docker push localhost:32000/dummy-crm-vite-app:latest
 microk8s kubectl rollout restart deploy dummy-crm-vite-nginx-app -n dummy-crm-namespace
 -----------------

@@ -4,11 +4,10 @@ import dayjs from "dayjs"
 
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
-import Container from "react-bootstrap/Container"
 import ListGroup from "react-bootstrap/ListGroup"
 import Row from "react-bootstrap/Row"
 import Spinner from "react-bootstrap/Spinner"
-import { FaEnvelope, FaPhone, FaSuitcaseRolling } from "react-icons/fa"
+import { FaSuitcaseRolling } from "react-icons/fa"
 
 import AppCoinfig from "../../AppConfig"
 import { IArticulo } from "./types"
@@ -53,7 +52,13 @@ const ListArticulos = () => {
               <Card>
                 <Card.Header>
                   <FaSuitcaseRolling /> Artíuclo #{articulo.id} -{" "}
-                  {dayjs(articulo.created_at).format("DD/MM/YYYY HH:mm")}
+                  {articulo.fecha_creacion && (
+                    <>
+                      {dayjs(articulo.fecha_creacion).format(
+                        "DD/MM/YYYY HH:mm"
+                      )}
+                    </>
+                  )}
                   <a
                     href={`/articulo/${articulo.id}`}
                     style={{ float: "right" }}

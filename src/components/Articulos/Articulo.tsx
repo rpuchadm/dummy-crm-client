@@ -9,9 +9,7 @@ import Form from "react-bootstrap/Form"
 import Row from "react-bootstrap/Row"
 import Spinner from "react-bootstrap/Spinner"
 import {
-  FaCheck,
   FaCheckCircle,
-  FaEnvelope,
   FaExclamationTriangle,
   FaSuitcaseRolling,
   FaUser,
