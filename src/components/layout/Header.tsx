@@ -5,9 +5,9 @@ import Container from "react-bootstrap/Container"
 import Modal from "react-bootstrap/Modal"
 import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
-import NavDropdown from "react-bootstrap/NavDropdown"
 
 import AppConfig from "../../AppConfig"
+import { FaRunning } from "react-icons/fa"
 
 const Header = () => {
   const [modalVisible, setModalVisible] = React.useState(false)
@@ -31,29 +31,13 @@ const Header = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/about">About</Nav.Link>
-              <Nav.Link href="/list">List Persons</Nav.Link>
+              <Nav.Link href="/listarticulos">Articulos</Nav.Link>
               <Nav.Link href="/person">New Person</Nav.Link>
-              <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown>
             </Nav>
             {lstoken ? (
               <Nav>
-                <Nav.Link href="#deets">More deets</Nav.Link>
                 <Nav.Link eventKey={2} onClick={logout}>
-                  Log Out
+                  <FaRunning /> Log Out
                 </Nav.Link>
               </Nav>
             ) : null}
