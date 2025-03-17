@@ -76,6 +76,15 @@ const AuthForm = ({
   )
 }
 
+interface FetchTokenResponse {
+  access_token: string
+  token_type: string
+  expires_in: number
+  // refresh_token: string
+  // scope: string
+  // created_at: number
+}
+
 interface AuthContainerProps {
   children: React.ReactNode
 }
@@ -99,9 +108,41 @@ const AuthContainer = ({ children }: AuthContainerProps) => {
     setRefetch((prev) => prev + 1)
   }
 
+  const code = new URLSearchParams(window.location.search).get("code")
+
   useEffect(() => {
+    const fetchTokenFromCode = async () => {
+      const url = AppConfig.API_BASE_URL + "authback/" + code
+      const response = await fetch(url, {
+        method: "GET",
+        credentials: "omit",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      if (response.status == 200) {
+        const data = (await response.json()) as FetchTokenResponse
+        if (data.access_token) {
+          localStorage.setItem(AppConfig.TOKEN_ITEM_NAME, data.access_token)
+        }
+        if (data.expires_in) {
+          const expires = new Date().getTime() + data.expires_in * 1000
+          localStorage.setItem(
+            AppConfig.TOKEN_ITEM_NAME + "_expires",
+            expires.toString()
+          )
+        }
+      } else {
+        setError(
+          "Error fetching token from code, status: " +
+            response.status +
+            " body: " +
+            (await response.text())
+        )
+      }
+      setIsLoading(false)
+    }
     const fetchAuth = async () => {
-      console.log("fetchAuth")
       const url = AppConfig.API_BASE_URL + "auth"
       const response = await fetch(url, {
         method: "GET",
@@ -124,20 +165,35 @@ const AuthContainer = ({ children }: AuthContainerProps) => {
           setError("An error occurred")
         }
         localStorage.removeItem(AppConfig.TOKEN_ITEM_NAME)
+        localStorage.removeItem(AppConfig.TOKEN_ITEM_NAME + "_expires")
       }
       setIsLoading(false)
     }
 
     if (token) {
+      console.log("AuthContainer token:", token)
+      setIsLoading(true)
       fetchAuth()
+    } else if (code) {
+      console.log("AuthContainer code:", code)
+      setIsLoading(true)
+      fetchTokenFromCode()
     }
-    setIsLoading(false)
-  }, [refetch])
+  }, [token, code, refetch])
 
   if (isLoading) {
     return <Spinner animation="border" role="status" />
   }
   if (!isAuthenticated) {
+    if (code) {
+      return (
+        <>
+          {" "}
+          <h1>AuthBack</h1>
+          code: {code}
+        </>
+      )
+    }
     return (
       <>
         <AuthForm {...{ token, isLoading, error, handleToken, handleSubmit }} />
