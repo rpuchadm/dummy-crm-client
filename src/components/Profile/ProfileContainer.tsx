@@ -74,6 +74,17 @@ const ProfileContainer = () => {
           )}
         </Col>
       </Row>
+      <Row>
+        <Col>
+          <br />
+          <strong>TODO: </strong>Integración de CRM con ERP.
+          <br />
+          El servidor de CRM debe acceder con identificación por token a los
+          datos del usuario por el api del servidor de ERP.
+          <br />
+          Esta application debe mostrarlos y compararlos.
+        </Col>
+      </Row>
     </Container>
   )
 }
