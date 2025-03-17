@@ -5,12 +5,9 @@ import dayjs from "dayjs"
 import Alert from "react-bootstrap/Alert"
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
-import ListGroup from "react-bootstrap/ListGroup"
 import Row from "react-bootstrap/Row"
 import Spinner from "react-bootstrap/Spinner"
 import {
-  FaAddressBook,
-  FaAddressCard,
   FaEnvelope,
   FaExclamationTriangle,
   FaPhone,

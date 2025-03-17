@@ -10,7 +10,7 @@ import Spinner from "react-bootstrap/Spinner"
 import { FaExclamationTriangle } from "react-icons/fa"
 
 import AppCoinfig from "../../AppConfig"
-import { IArticulo, IProfile } from "./types"
+import { IProfile } from "./types"
 import Profile from "./Profile"
 
 const ProfileContainer = () => {
