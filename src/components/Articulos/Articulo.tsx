@@ -18,17 +18,17 @@ import {
 import AppCoinfig from "../../AppConfig"
 import { IArticulo } from "./types"
 interface ArticuloProps {
-  articulo: IArticulo
+  data: IArticulo
 }
 
-const Articulo = ({ articulo }: ArticuloProps) => {
+const Articulo = ({ data }: ArticuloProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [message, setMessage] = useState<string>("")
   const [error, setError] = useState<string>("")
-  const [nombre, setNombre] = useState<string>(articulo.nombre)
-  const [descripcion, setDescripcion] = useState<string>(articulo.descripcion)
-  const [precio, setPrecio] = useState<number>(articulo.precio)
-  const [stock, setStock] = useState<number>(articulo.stock)
+  const [nombre, setNombre] = useState<string>(data.nombre)
+  const [descripcion, setDescripcion] = useState<string>(data.descripcion)
+  const [precio, setPrecio] = useState<number>(data.precio)
+  const [stock, setStock] = useState<number>(data.stock)
   const handleNombre = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNombre(e.target.value)
   }
@@ -42,7 +42,7 @@ const Articulo = ({ articulo }: ArticuloProps) => {
     setStock(parseInt(e.target.value))
   }
 
-  const id = articulo?.id ? articulo.id : 0
+  const id = data?.id ? data.id : 0
   const method = id ? "PUT" : "POST"
   const handleSave = (
     ev: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
@@ -149,7 +149,7 @@ const Articulo = ({ articulo }: ArticuloProps) => {
             onClick={handleSave}
           >
             {isLoading ? <Spinner animation="border" size="sm" /> : <FaUser />}{" "}
-            {articulo.id ? <>Update</> : <>Create</>}
+            {data.id ? <>Update</> : <>Create</>}
           </Button>
         </Card.Footer>
       </Card>

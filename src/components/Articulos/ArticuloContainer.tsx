@@ -60,7 +60,7 @@ const ArticuloContainer = ({}) => {
           {isLoading || !data ? (
             <Spinner animation="border" role="status" />
           ) : (
-            <Articulo articulo={data} />
+            <Articulo data={data} />
           )}
         </Col>
       </Row>

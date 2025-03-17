@@ -4,7 +4,7 @@ interface IProfile {
   nombre: string
   email: string
   telefono: string
-  direccion: number
+  direccion: string
   fecha_registro?: string
 }
 
