@@ -1,80 +1,9 @@
 import { useEffect, useState } from "react"
 
 import Alert from "react-bootstrap/Alert"
-import Button from "react-bootstrap/Button"
-import Col from "react-bootstrap/Col"
-import Container from "react-bootstrap/Container"
-import Form from "react-bootstrap/Form"
-import Row from "react-bootstrap/Row"
 import Spinner from "react-bootstrap/Spinner"
 import AppConfig from "../../AppConfig"
 import { FaExclamationTriangle } from "react-icons/fa"
-
-interface AuthFormProps {
-  token: string
-  error: string
-  isLoading: boolean
-  handleToken: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handleSubmit: (
-    ev: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
-  ) => Promise<void>
-}
-
-const AuthForm = ({
-  token,
-  error,
-  isLoading,
-  handleToken,
-  handleSubmit,
-}: AuthFormProps) => {
-  return (
-    <Form onSubmit={handleSubmit}>
-      <Container>
-        <Row>
-          <Col>
-            <h1>Unauthorized</h1>
-            <p>
-              In order to access this page, you need to provide a valid token.
-            </p>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Form.Group className="mb-3" controlId="formBasicToken">
-              <Form.Label>Token</Form.Label>
-              <Form.Control
-                value={token}
-                onChange={handleToken}
-                type="text"
-                placeholder="Enter token"
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            {error && (
-              <>
-                <Alert variant="danger">
-                  <FaExclamationTriangle size={25}> </FaExclamationTriangle>{" "}
-                  {error}.
-                </Alert>
-              </>
-            )}
-            <Button
-              variant="primary"
-              type="submit"
-              disabled={!token || isLoading}
-              onClick={handleSubmit}
-            >
-              Continue
-            </Button>
-          </Col>
-        </Row>
-      </Container>
-    </Form>
-  )
-}
 
 interface FetchTokenResponse {
   access_token: string
@@ -94,19 +23,8 @@ const AuthContainer = ({ children }: AuthContainerProps) => {
   const [token, setToken] = useState<string>(
     localStorage.getItem(AppConfig.TOKEN_ITEM_NAME) || ""
   )
-  const [isLoading, setIsLoading] = useState(true)
-  const [refetch, setRefetch] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string>("")
-  const handleToken = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setToken(e.target.value)
-  }
-  const handleSubmit = async (
-    ev: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
-  ) => {
-    ev.preventDefault()
-    localStorage.setItem(AppConfig.TOKEN_ITEM_NAME, token)
-    setRefetch((prev) => prev + 1)
-  }
 
   const code = new URLSearchParams(window.location.search).get("code")
 
@@ -179,10 +97,20 @@ const AuthContainer = ({ children }: AuthContainerProps) => {
       setIsLoading(true)
       fetchTokenFromCode()
     }
-  }, [token, code, refetch])
+  }, [token, code])
 
   if (isLoading) {
     return <Spinner animation="border" role="status" />
+  }
+  if (error) {
+    return (
+      <Alert variant="danger">
+        <Alert.Heading>Error</Alert.Heading>
+        <p>
+          <FaExclamationTriangle /> {error}
+        </p>
+      </Alert>
+    )
   }
   if (!isAuthenticated) {
     if (code) {
@@ -194,9 +122,21 @@ const AuthContainer = ({ children }: AuthContainerProps) => {
         </>
       )
     }
+    const redirect_uri = encodeURIComponent(AppConfig.REDIRECT_URI)
     return (
       <>
-        <AuthForm {...{ token, isLoading, error, handleToken, handleSubmit }} />
+        <Alert variant="danger">
+          <Alert.Heading>Authentication error</Alert.Heading>
+          <p>
+            <FaExclamationTriangle /> Para poder usar esta aplicación, debes
+            autenticarte.
+          </p>
+          <a
+            href={`${AppConfig.AUTH_LINK}?client_id=${AppConfig.CLIENT_ID}&redirect_uri=${redirect_uri}`}
+          >
+            Continuar
+          </a>
+        </Alert>
       </>
     )
   }
