@@ -31,6 +31,9 @@ const Header = () => {
   }
   const lstoken = localStorage.getItem(AppConfig.TOKEN_ITEM_NAME)
 
+  const user_id = sessionStorage.getItem("user_id")
+  const role = sessionStorage.getItem("role")
+
   return (
     <>
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
@@ -55,6 +58,13 @@ const Header = () => {
             </Nav>
             {lstoken ? (
               <Nav>
+                {user_id && (
+                  <Nav>
+                    <Nav.Link href={`/profile/${user_id}`}>
+                      Profile: {role}
+                    </Nav.Link>
+                  </Nav>
+                )}
                 <Nav.Link eventKey={2} onClick={logout}>
                   <FaRunning /> Log Out
                 </Nav.Link>

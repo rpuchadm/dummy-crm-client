@@ -23,7 +23,7 @@ const AuthContainer = ({ children }: AuthContainerProps) => {
   const [token, setToken] = useState<string>(
     localStorage.getItem(AppConfig.TOKEN_ITEM_NAME) || ""
   )
-  const [sesionIniciada, setSesionIniciada] = useState(true)
+  const [sesionIniciada, setSesionIniciada] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string>("")
 
@@ -79,10 +79,28 @@ const AuthContainer = ({ children }: AuthContainerProps) => {
           Authorization: `Bearer ${token}`,
         },
       })
-      const data = (await response.json()) as { status: string; error: string }
+      const data = (await response.json()) as {
+        status: string
+        error: string
+        user_id?: number
+        attributes?: Record<string, string>
+      }
       if (data.status === "success") {
         setToken(token)
         setIsAuthenticated(true)
+        if (data.user_id) {
+          sessionStorage.setItem("user_id", data.user_id.toString())
+        }
+        if (data.attributes && Object.keys(data.attributes).length > 0) {
+          Object.keys(data.attributes).forEach((key) => {
+            const value = data.attributes ? data.attributes[key] : ""
+            console.log("fetchAuth attributes key:", key, "value:", value)
+            if (value && typeof value === "string") {
+              sessionStorage.setItem(key, value)
+              console.log("sessionStorage.setItem:", key, value)
+            }
+          })
+        }
       } else {
         if (isAuthenticated) {
           setIsAuthenticated(false)

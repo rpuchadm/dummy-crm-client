@@ -49,7 +49,7 @@ const Profile = ({ data }: ProfileProps) => {
     ev.preventDefault()
     setIsLoading(true)
 
-    const url = AppCoinfig.API_BASE_URL + "profile/" + id
+    const url = AppCoinfig.API_BASE_URL + "profile" + (id ? "/" + id : "")
     const profile = { id, nombre, email, telefono, direccion, user_id }
     const sendProfile = async (profile: IProfile) => {
       const lstoken = localStorage.getItem(AppCoinfig.TOKEN_ITEM_NAME)

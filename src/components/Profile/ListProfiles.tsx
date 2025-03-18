@@ -73,7 +73,7 @@ const ListProfiles = () => {
                           </small>
                         )}
                         <a
-                          href={`/profile/${profile.id}`}
+                          href={`/profile/${profile.user_id}`}
                           style={{ float: "right" }}
                         >
                           Edit
@@ -98,6 +98,11 @@ const ListProfiles = () => {
                           </Col>
                         </Row>
                       </Card.Body>
+                      <Card.Footer>
+                        <small>
+                          id: {profile.id}; user_id: {profile.user_id}
+                        </small>
+                      </Card.Footer>
                     </Card>
                   </Col>
                 ))}
