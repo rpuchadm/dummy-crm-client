@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import Alert from "react-bootstrap/Alert"
 import Spinner from "react-bootstrap/Spinner"
 import AppConfig from "../../AppConfig"
-import { FaExclamationTriangle } from "react-icons/fa"
+import { FaCheckCircle, FaExclamationTriangle } from "react-icons/fa"
 
 interface FetchTokenResponse {
   access_token: string
@@ -23,6 +23,7 @@ const AuthContainer = ({ children }: AuthContainerProps) => {
   const [token, setToken] = useState<string>(
     localStorage.getItem(AppConfig.TOKEN_ITEM_NAME) || ""
   )
+  const [sesionIniciada, setSesionIniciada] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string>("")
 
@@ -49,6 +50,15 @@ const AuthContainer = ({ children }: AuthContainerProps) => {
             AppConfig.TOKEN_ITEM_NAME + "_expires",
             expires.toString()
           )
+        }
+        const redirect = localStorage.getItem(
+          AppConfig.TOKEN_ITEM_NAME + "_redirect"
+        )
+        if (redirect) {
+          localStorage.removeItem(AppConfig.TOKEN_ITEM_NAME + "_redirect")
+          window.location.href
+        } else {
+          setSesionIniciada(true)
         }
       } else {
         setError(
@@ -84,6 +94,10 @@ const AuthContainer = ({ children }: AuthContainerProps) => {
         }
         localStorage.removeItem(AppConfig.TOKEN_ITEM_NAME)
         localStorage.removeItem(AppConfig.TOKEN_ITEM_NAME + "_expires")
+        if (window.location.pathname !== "/") {
+          const uri = window.location.pathname + window.location
+          localStorage.setItem(AppConfig.TOKEN_ITEM_NAME + "_redirect", uri)
+        }
       }
       setIsLoading(false)
     }
@@ -108,6 +122,16 @@ const AuthContainer = ({ children }: AuthContainerProps) => {
         <Alert.Heading>Error</Alert.Heading>
         <p>
           <FaExclamationTriangle /> {error}
+        </p>
+      </Alert>
+    )
+  }
+  if (sesionIniciada) {
+    return (
+      <Alert variant="success">
+        <Alert.Heading>Sesión iniciada</Alert.Heading>
+        <p>
+          <FaCheckCircle /> La sesion ha sido iniciada correctamente.
         </p>
       </Alert>
     )
