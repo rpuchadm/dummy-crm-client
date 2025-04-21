@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dummy-crm-client
+spec:
+  destination:
+    namespace: dummy-crm-namespace
+    server: https://kubernetes.default.svc
+  source:
+    path: k8s
+    repoURL: https://github.com/rpuchadm/dummy-crm-client.git
+    targetRevision: HEAD
+  sources: []
+  project: default
