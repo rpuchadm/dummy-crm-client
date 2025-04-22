@@ -11,9 +11,10 @@ import { FaCheckCircle, FaExclamationTriangle, FaUser } from "react-icons/fa"
 
 import AppCoinfig from "../../AppConfig"
 
-import { IProfile } from "./types"
+import { ICliente } from "./types"
+
 interface ProfileProps {
-  data: IProfile
+  data: ICliente
 }
 
 const Profile = ({ data }: ProfileProps) => {

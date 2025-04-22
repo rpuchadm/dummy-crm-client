@@ -1,11 +1,16 @@
 interface IProfile {
-  id?: number
-  user_id: number
-  nombre: string
-  email: string
-  telefono: string
-  direccion: string
-  fecha_registro?: string
+  cliente: ICliente
+  corp_user: ICorpUser
 }
-
-export { IProfile }
+interface ICorpUser {
+  person: ICorpUSerPerson
+}
+interface ICorpUSerPerson {
+  apellidos: string
+  dni: string
+  email: string
+  id: number
+  nombre: string
+  telefono: string
+}
+export { ICliente, IProfile }

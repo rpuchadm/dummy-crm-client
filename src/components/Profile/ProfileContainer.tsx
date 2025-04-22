@@ -12,19 +12,12 @@ import { FaExclamationTriangle } from "react-icons/fa"
 import AppCoinfig from "../../AppConfig"
 import { IProfile } from "./types"
 import Profile from "./Profile"
+import { Card } from "react-bootstrap"
 
 const ProfileContainer = () => {
   const { id } = useParams()
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [data, setData] = useState<IProfile | null>({
-    id: 0,
-    nombre: "",
-    email: "",
-    telefono: "",
-    direccion: "",
-    fecha_registro: "",
-    user_id: 0,
-  })
+  const [data, setData] = useState<IProfile | null>(null)
   const [error, setError] = useState<string>("")
 
   useEffect(() => {
@@ -61,28 +54,44 @@ const ProfileContainer = () => {
           {isLoading || !data ? (
             <Spinner animation="border" role="status" />
           ) : (
-            <Profile data={data} />
+            <>
+              <Profile data={data.cliente} />
+              <br />
+            </>
           )}
         </Col>
       </Row>
       <Row>
         <Col>
           {error && (
-            <Alert variant="danger">
-              <FaExclamationTriangle /> {error}
-            </Alert>
+            <>
+              <Alert variant="danger">
+                <FaExclamationTriangle /> {error}
+              </Alert>
+              <br />
+            </>
           )}
         </Col>
       </Row>
       <Row>
         <Col>
-          <br />
-          <strong>TODO: </strong>Integración de CRM con ERP.
-          <br />
-          El servidor de CRM debe acceder con identificación por token a los
-          datos del usuario por el api del servidor de ERP.
-          <br />
-          Esta application debe mostrarlos y compararlos.
+          <Card>
+            <Card.Header>
+              <Card.Title>Integración de CRM con ERP</Card.Title>
+            </Card.Header>
+            <Card.Body>
+              {data?.corp_user?.person?.id && (
+                <>
+                  id: {data.corp_user.person.id} <br />
+                  dni: {data.corp_user.person.dni} <br />
+                  nombre: {data.corp_user.person.nombre} <br />
+                  apellidos: {data.corp_user.person.apellidos} <br />
+                  email: {data.corp_user.person.email} <br />
+                  telefono: {data.corp_user.person.telefono} <br />
+                </>
+              )}
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>
