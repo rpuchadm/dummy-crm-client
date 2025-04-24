@@ -15,7 +15,7 @@ import {
   FaUser,
 } from "react-icons/fa"
 
-import AppCoinfig from "../../AppConfig"
+import AppConfig from "../../AppConfig"
 import { IArticulo } from "./types"
 interface ArticuloProps {
   data: IArticulo
@@ -50,10 +50,10 @@ const Articulo = ({ data }: ArticuloProps) => {
     ev.preventDefault()
     setIsLoading(true)
 
-    const url = AppCoinfig.API_BASE_URL + "articulo/" + id
+    const url = AppConfig.API_BASE_URL + "articulo/" + id
     const articulo = { id, nombre, descripcion, precio, stock }
     const sendArticulo = async (articulo: IArticulo) => {
-      const lstoken = localStorage.getItem(AppCoinfig.TOKEN_ITEM_NAME)
+      const lstoken = localStorage.getItem(AppConfig.TOKEN_ITEM_NAME)
       const response = await fetch(url, {
         method: method,
         headers: {

@@ -12,6 +12,10 @@ interface IssueFormProps {
   type: string
   id: number
 }
+interface IssuePostData {
+  subject: string
+  description: string
+}
 const IssueForm = ({ type, id }: IssueFormProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [message, setMessage] = useState<string>("")
@@ -30,10 +34,10 @@ const IssueForm = ({ type, id }: IssueFormProps) => {
     ev.preventDefault()
     setIsLoading(true)
 
-    const url = AppConfig.API_BASE_URL + "issue/" + type + "/" + id
     const issue = { subject, description }
-    const sendIssue = async (issue: any) => {
-      const lstoken = localStorage.getItem("token")
+    const sendIssue = async (issue: IssuePostData) => {
+      const url = AppConfig.API_BASE_URL + "issue/" + type + "/" + id
+      const lstoken = localStorage.getItem(AppConfig.TOKEN_ITEM_NAME)
       const response = await fetch(url, {
         method: "POST",
         headers: {
