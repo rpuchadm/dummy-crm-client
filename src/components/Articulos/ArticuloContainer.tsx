@@ -10,19 +10,22 @@ import Spinner from "react-bootstrap/Spinner"
 import { FaExclamationTriangle } from "react-icons/fa"
 
 import AppCoinfig from "../../AppConfig"
-import { IArticulo } from "./types"
+import { IArticulo, IArticuloDatos } from "./types"
 import Articulo from "./Articulo"
+import IssuesContainer from "../Issues/IssuesContainer"
 
 const ArticuloContainer = ({}) => {
   const { id } = useParams()
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [data, setData] = useState<IArticulo | null>({
-    id: 0,
-    nombre: "",
-    descripcion: "",
-    precio: 0,
-    stock: 0,
-    fecha_creacion: "",
+  const [data, setData] = useState<IArticuloDatos | null>({
+    articulo: {
+      id: 0,
+      nombre: "",
+      descripcion: "",
+      precio: 0,
+      stock: 0,
+    } as IArticulo,
+    issue_requests: [],
   })
   const [error, setError] = useState<string>("")
 
@@ -42,7 +45,7 @@ const ArticuloContainer = ({}) => {
       if (response.status !== 200 || data.error) {
         setError(data.error)
       } else {
-        setData(data as IArticulo)
+        setData(data as IArticuloDatos)
       }
       setIsLoading(false)
     }
@@ -60,7 +63,7 @@ const ArticuloContainer = ({}) => {
           {isLoading || !data ? (
             <Spinner animation="border" role="status" />
           ) : (
-            <Articulo data={data} />
+            <Articulo data={data.articulo} />
           )}
         </Col>
       </Row>
@@ -73,6 +76,13 @@ const ArticuloContainer = ({}) => {
           )}
         </Col>
       </Row>
+      {id && (
+        <Row>
+          <Col>
+            <IssuesContainer type="articulo" id={parseInt(id)} />
+          </Col>
+        </Row>
+      )}
     </Container>
   )
 }

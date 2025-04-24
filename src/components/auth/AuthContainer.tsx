@@ -101,14 +101,9 @@ const AuthContainer = ({ children }: AuthContainerProps) => {
             }
           })
         }
-      } else {
+      } else if (response.status === 401) {
         if (isAuthenticated) {
           setIsAuthenticated(false)
-        }
-        if (data.error) {
-          setError(data.error)
-        } else {
-          setError("An error occurred")
         }
         localStorage.removeItem(AppConfig.TOKEN_ITEM_NAME)
         localStorage.removeItem(AppConfig.TOKEN_ITEM_NAME + "_expires")
@@ -116,7 +111,12 @@ const AuthContainer = ({ children }: AuthContainerProps) => {
           const uri = window.location.pathname + window.location
           localStorage.setItem(AppConfig.TOKEN_ITEM_NAME + "_redirect", uri)
         }
+      } else if (data.error) {
+        setError(data.error)
+      } else {
+        setError("An error occurred")
       }
+
       setIsLoading(false)
     }
 

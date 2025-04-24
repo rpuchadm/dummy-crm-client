@@ -13,6 +13,7 @@ import AppCoinfig from "../../AppConfig"
 import { IProfile } from "./types"
 import Profile from "./Profile"
 import { Card } from "react-bootstrap"
+import IssuesContainer from "../Issues/IssuesContainer"
 
 const ProfileContainer = () => {
   const { id } = useParams()
@@ -94,6 +95,13 @@ const ProfileContainer = () => {
           </Card>
         </Col>
       </Row>
+      {id && (
+        <Row>
+          <Col>
+            <IssuesContainer type="cliente" id={parseInt(id)} />
+          </Col>
+        </Row>
+      )}
     </Container>
   )
 }

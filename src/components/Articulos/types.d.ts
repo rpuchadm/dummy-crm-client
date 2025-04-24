@@ -7,4 +7,13 @@ interface IArticulo {
   fecha_creacion?: string
 }
 
-export { IArticulo }
+interface IIssueRequest {
+  id?: number
+}
+
+interface IArticuloDatos {
+  articulo: IArticulo
+  issue_requests: IIssueRequest[]
+}
+
+export { IArticulo, IArticuloDatos, IIssueRequest }
